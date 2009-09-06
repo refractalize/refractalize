@@ -3,7 +3,7 @@
  * Copyright (c) 2005 Marcus Engene myfirstname(at)mylastname.se
  *
  * parameters for watermark:
- *  -m nbr = nbr is 0..1. 0 is the default mode, see below.
+ *  -m nbr = nbr is 0..2. 0 is the default mode, see below.
  *  -t nbr = nbr is six digit hex. Threshold.
  *  -f file = file is the watermark image filename. You must specify this!
  *
@@ -36,6 +36,20 @@
  * Note that the entire vhook argument is encapsulated in ''. This
  * way, arguments to the vhook won't be mixed up with those for ffmpeg.
  *
+ * MODE 2:
+ * Paste the watermark image onto the video image respecting alpha channels.
+ * 
+ * Alpha channels are regularly found in PNG images and affect the tranparency
+ * of the image. If the pixel has 0x00 alpha value it is entirely transparent
+ * and the original video pixel is unchanged. If the alpha value is 0xff
+ * (100%) the watermark pixel is used entirely. Otherwise, the following
+ * formula is used:
+ * 
+ * video_pixel = (1 - alpha) * video_pixel + alpha * watermark_pixel
+ * 
+ * Example usage:
+ *  ffmpeg -i infile -vhook '/path/watermark.so -f wm.png' -an out.mov
+ * 
  * This file is part of FFmpeg.
  *
  * FFmpeg is free software; you can redistribute it and/or
