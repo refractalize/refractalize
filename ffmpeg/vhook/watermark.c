@@ -29,13 +29,6 @@
  * Per color do this:
  * If mask color > threshold color then the watermark pixel is used.
  *
- * Example usage:
- *  ffmpeg -i infile -vhook '/path/watermark.so -f wm.gif' -an out.mov
- *  ffmpeg -i infile -vhook '/path/watermark.so -f wm.gif -m 1 -t 222222' -an out.mov
- *
- * Note that the entire vhook argument is encapsulated in ''. This
- * way, arguments to the vhook won't be mixed up with those for ffmpeg.
- *
  * MODE 2:
  * Paste the watermark image onto the video image respecting alpha channels.
  * 
@@ -48,7 +41,12 @@
  * video_pixel = (1 - alpha) * video_pixel + alpha * watermark_pixel
  * 
  * Example usage:
- *  ffmpeg -i infile -vhook '/path/watermark.so -f wm.png' -an out.mov
+ *  ffmpeg -i infile -vhook '/path/watermark.so -f wm.gif' -an out.mov
+ *  ffmpeg -i infile -vhook '/path/watermark.so -f wm.gif -m 1 -t 222222' -an out.mov
+ *  ffmpeg -i infile -vhook '/path/watermark.so -f wm.png -m 2' -an out.mov
+ *
+ * Note that the entire vhook argument is encapsulated in ''. This
+ * way, arguments to the vhook won't be mixed up with those for ffmpeg.
  * 
  * This file is part of FFmpeg.
  *
